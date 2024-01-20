@@ -5,9 +5,19 @@ namespace EscireOrlab\Connect\Providers;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Auth\Events\Login;
+use EscireOrlab\Connect\Support\Listeners\UserLoggedInListener;
 
 class EventServiceProvider extends ServiceProvider
 {
+
+    protected $listen = [
+        Login::class => [
+            UserLoggedInListener::class,
+        ],
+    ];
+
+    
     public function boot()
     {
         $this->registerEventsAndObservers();

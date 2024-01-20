@@ -11,24 +11,24 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
 
-        $this->mapApiRoutes();      
+        $this->mapRoutes();      
 
     }
 
-    protected function mapApiRoutes()
+    protected function mapRoutes()
     {
 
-        foreach (glob(__DIR__ . '/../../routes/api/models/*.php') as $file) {
-
-            $name = basename($file, '.php');
-
-            Route::middleware('api')
-                ->prefix('api/escireorlab/connect/' . $name)
-                ->as('api.escireorlab.connect.' . $name . '.')
-                ->namespace('EscireOrlab\Connect\Http\Controllers')
-                ->group($file);
-
-        }
+        Route::middleware('web')
+            ->prefix('orlab/connect/')
+            ->as('orlab.connect.')
+            ->namespace('EscireOrlab\Connect\Http\Controllers')
+            ->group(__DIR__ . '/../../routes/web.php');
+        
+        Route::middleware('api')
+            ->prefix('orlab/connect/')
+            ->as('orlab.connect.')
+            ->namespace('EscireOrlab\Connect\Http\Controllers')
+            ->group(__DIR__ . '/../../routes/api.php');
 
     }
 
