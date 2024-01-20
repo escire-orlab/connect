@@ -1,0 +1,31 @@
+{
+    "name": "escire-orlab/connect",
+    "description": "Paquete para conectar ORLAB y Proyecto Azul",
+    "autoload": {
+        "psr-4": {
+            "EscireOrlab\\Connect\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Homero Raul",
+            "email": "h.raulvc@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^8.21"
+    },
+    "require": {
+        "innoboxrr/larapack-generator": "^4.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "EscireOrlab\\Connect\\Providers\\AppServiceProvider",
+                "EscireOrlab\\Connect\\Providers\\AuthServiceProvider",
+                "EscireOrlab\\Connect\\Providers\\EventServiceProvider",
+                "EscireOrlab\\Connect\\Providers\\RouteServiceProvider"
+            ]
+        }
+    }
+}
