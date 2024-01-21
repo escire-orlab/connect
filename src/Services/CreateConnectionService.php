@@ -12,7 +12,7 @@ class CreateConnectionService
 
     public static $customCreateConnectCallback;
 
-    public static function createCallback($request) : User
+    public static function createCallback($request)
     {
         $connData = $request->connect_data;
 

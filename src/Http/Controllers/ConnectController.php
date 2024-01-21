@@ -10,6 +10,8 @@ use EscireOrlab\Connect\Services\CloseConnectionService;
 
 class ConnectController extends Controller
 {
+
+    public static $customCreateConnectCallback;
     
     public function __construct()
     {
@@ -25,6 +27,9 @@ class ConnectController extends Controller
     {
         try {
             $user = CreateConnectionService::createCallback($request);
+            if (self::$customCreateConnectCallback && is_callable(self::$customCreateConnectCallback)) {
+                return call_user_func(self::$customCreateConnectCallback, $user, $request);
+            }
             auth()->login($user);
             return redirect($request->path ?? '/');
         } catch(\Exception $e) {
