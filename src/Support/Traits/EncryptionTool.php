@@ -8,31 +8,37 @@ use OpenSSL;
 trait EncryptionTool
 {
 
+    const METHOD = 'AES-256-CBC';
+
     public static function encrypt($data, $key)
     {
-        $method = 'AES-256-CBC';
-        $ivLength = openssl_cipher_iv_length($method);
+        if (!$data) {
+            throw new \InvalidArgumentException('No data provided for encryption.');
+        }
+
+        $ivLength = openssl_cipher_iv_length(self::METHOD);
         $iv = openssl_random_pseudo_bytes($ivLength);
 
-        $encrypted = openssl_encrypt($data, $method, $key, 0, $iv);
+        $encrypted = openssl_encrypt($data, self::METHOD, $key, 0, $iv);
         if ($encrypted === false) {
             throw new RuntimeException('Unable to encrypt the data.');
         }
 
-        // Combina IV y datos encriptados
         return base64_encode($iv . $encrypted);
     }
 
     public static function decrypt($data, $key)
     {
-        $method = 'AES-256-CBC';
-        $ivLength = openssl_cipher_iv_length($method);
+        if (!$data) {
+            throw new \InvalidArgumentException('No data provided for decryption.');
+        }
 
-        $data = base64_decode($data);
-        $iv = substr($data, 0, $ivLength);
-        $data = substr($data, $ivLength);
+        $ivLength = openssl_cipher_iv_length(self::METHOD);
+        $decodedData = base64_decode($data);
+        $iv = substr($decodedData, 0, $ivLength);
+        $encryptedData = substr($decodedData, $ivLength);
 
-        $decrypted = openssl_decrypt($data, $method, $key, 0, $iv);
+        $decrypted = openssl_decrypt($encryptedData, self::METHOD, $key, 0, $iv);
         if ($decrypted === false) {
             throw new RuntimeException('Unable to decrypt the data.');
         }
