@@ -1,5 +1,8 @@
 {
     "name": "escire-orlab/connect",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
     "description": "Paquete para conectar ORLAB y Proyecto Azul",
     "autoload": {
         "psr-4": {
